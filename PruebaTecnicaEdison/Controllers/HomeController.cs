@@ -45,10 +45,19 @@ namespace PruebaTecnicaEdison.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Filter(int documentNumber)
+        public async Task<IActionResult> Filter()
         {
-            var model = await _personBL.GetPeople(documentNumber);
-            return View(model);
+            var model = await _personBL.GetPeople(default(int));
+            ViewBag.People = model;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Filter(Filter filter)
+        {
+            var model = await _personBL.GetPeople(filter.documentNumber);
+            ViewBag.People = model;
+            return View();
         }
     }
 }
